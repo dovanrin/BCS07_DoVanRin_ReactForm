@@ -11,7 +11,7 @@ export default class RenderGlass extends Component {
       return (
         <div
           key={index}
-          class="card text-start col-1 m-2 align-items-center"
+          class="card text-start col-1 m-2 align-items-center d-flex"
           onClick={() => {
             this.handelGlass(url);
           }}
@@ -31,7 +31,11 @@ export default class RenderGlass extends Component {
       <div>
         <div className="w-75 text-center container position-relative abs">
           <img className="w-50" src="./img_ex/glassesImage/model.jpg" alt="" />
-          <img className="position-absolute glassMOdel" src={glass} alt="" />
+          <img
+            className="position-absolute glassMOdel opacity-75"
+            src={glass}
+            alt=""
+          />
         </div>
         <div className="row">{this.renderListGass()}</div>
       </div>
