@@ -3,17 +3,19 @@ import { arrGlass } from "./Databyding";
 
 export default class RenderGlass extends Component {
   state = {
-    glass: "./img_ex/glassesImage/v1.png",
+    glass: "",
+    name: "",
+    desc: "",
   };
 
   renderListGass = () => {
-    return arrGlass.map(({ url, name, hinhModel }, index) => {
+    return arrGlass.map(({ url, name, hinhModel, desc }, index) => {
       return (
         <div
           key={index}
           class="card text-start col-1 m-2 align-items-center d-flex"
           onClick={() => {
-            this.handelGlass(url);
+            this.handelGlass(url, name, desc);
           }}
         >
           <img class="card-img-top p-2 w-100" src={hinhModel} alt="Title" />
@@ -21,11 +23,11 @@ export default class RenderGlass extends Component {
       );
     });
   };
-  handelGlass = (value) => {
-    this.setState({ glass: value });
+  handelGlass = (value, name, desc) => {
+    this.setState({ glass: value, name: name, desc: desc });
   };
   render() {
-    let { glass } = this.state;
+    let { glass, name, desc } = this.state;
     console.log(glass);
     return (
       <div>
@@ -36,6 +38,13 @@ export default class RenderGlass extends Component {
             src={glass}
             alt=""
           />
+          <div className="position-absolute text">
+            <h2>Thông tin chi tiết</h2>
+            <h3>{name}</h3>
+            <p>
+              <b>{desc}</b>
+            </p>
+          </div>
         </div>
         <div className="row">{this.renderListGass()}</div>
       </div>
