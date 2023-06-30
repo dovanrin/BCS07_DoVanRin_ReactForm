@@ -8,9 +8,9 @@ export default class FormSinhVien extends Component {
     email: "",
   };
   getValueInput = (event) => {
-    let { value, maSV } = event.target;
+    let { value, id } = event.target;
     this.setState({
-      [maSV]: value,
+      [id]: value,
     });
   };
   handleSubmit = (event) => {
