@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import FormSinhVien from "./FormSinhVien";
 import { createRef } from "react";
+import { connect } from "react-redux";
 
-export default class XuLyForm extends Component {
+class XuLyForm extends Component {
   constructor() {
     super();
     this.ref = createRef();
@@ -28,7 +29,9 @@ export default class XuLyForm extends Component {
     }
   };
   layThongTinInput = (maSV) => {
-    let sinhVien = this.state.arrThongTin.find((item) => item.maSV == maSV);
+    let sinhVien = this.props.mangSinhVien.find(
+      (item) => item.maSV == sinhVien.maSV
+    );
     // if (sinhVien) {
     //   this.setState({
     //     ...this.state,
@@ -49,6 +52,35 @@ export default class XuLyForm extends Component {
       this.setState({ arrThongTin: arrnewThongTin });
     }
   };
+  renderThongTin = () => {
+    const { mangSinhVien } = this.props;
+    return mangSinhVien.map((sinhVien, index) => {
+      return (
+        <tr key={index}>
+          <td>{sinhVien.maSV}</td>
+          <td>{sinhVien.hoTen}</td>
+          <td>{sinhVien.soDT}</td>
+          <td>{sinhVien.email}</td>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              this.props.xoaSinhVien(sinhVien.maSV);
+            }}
+          >
+            Xóa
+          </button>
+          <button
+            className="btn btn-warning"
+            onClick={() => {
+              this.layThongTinSinhVien(sinhVien);
+            }}
+          >
+            Sữa
+          </button>
+        </tr>
+      );
+    });
+  };
   render() {
     return (
       <div>
@@ -57,12 +89,16 @@ export default class XuLyForm extends Component {
             THÔNG TIN SINH VIÊN
           </h1>
           <FormSinhVien
-            ref={this.ref}
-            themSinhVien={this.themSinhVien}
-            thongTinSinhVien={this.state.sinhVien}
-            capNhatThongTin={this.capNhatThongTin}
+          // ref={this.ref}
+          // themSinhVien={this.themSinhVien}
+          // thongTinSinhVien={this.state.sinhVien}
+          // capNhatThongTin={this.capNhatThongTin}
           />
           <div>
+            <div>
+              <label>Tìm Kiếm: </label>
+              <input className="inputSearch m-3" type="search" />
+            </div>
             <table className="table mt-2" cellPadding={20}>
               <thead className="bg-secondary text-white">
                 <th>Mã Sinh Viên</th>
@@ -72,34 +108,14 @@ export default class XuLyForm extends Component {
                 <th>Hành Động</th>
               </thead>
               <tbody>
-                {this.state.arrThongTin.map(
+                {this.renderThongTin()}
+                {/* {this.state.arrThongTin.map(
                   ({ maSV, hoTen, soDT, email }, index) => {
                     return (
-                      <tr key={index}>
-                        <td>{maSV}</td>
-                        <td>{hoTen}</td>
-                        <td>{soDT}</td>
-                        <td>{email}</td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => {
-                            this.xoaSinhVien(maSV);
-                          }}
-                        >
-                          Xóa
-                        </button>
-                        <button
-                          className="btn btn-warning"
-                          onClick={() => {
-                            this.layThongTinInput(maSV);
-                          }}
-                        >
-                          Sữa
-                        </button>
-                      </tr>
+                      
                     );
                   }
-                )}
+                )} */}
               </tbody>
             </table>
           </div>
@@ -107,4 +123,33 @@ export default class XuLyForm extends Component {
       </div>
     );
   }
+  // componentDidUpdate(prewProps,prewState){
+
+  // }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    xoaSinhVien: (maSV) => {
+      const action = {
+        type: "XOA_SINH_VIEN",
+        maSV,
+      };
+
+      dispatch(action);
+    },
+    capNhatThongTinSV: (maSV) => {
+      const action = {
+        type: "CN_SINH_VIEN",
+        maSV,
+      };
+
+      dispatch(action);
+    },
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    mangSinhVien: state.sinhVienReduce.mangSinhVien,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(XuLyForm);

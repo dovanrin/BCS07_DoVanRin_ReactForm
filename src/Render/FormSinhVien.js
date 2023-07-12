@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
-export default class FormSinhVien extends Component {
+import { connect } from "react-redux";
+class FormSinhVien extends Component {
   state = {
     values: { maSV: "", hoTen: "", soDT: "", email: "" },
     orros: { maSV: "", hoTen: "", soDT: "", email: "" },
@@ -38,15 +38,19 @@ export default class FormSinhVien extends Component {
             }
           }
           break;
-      }
-      let regexEmail =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      let checkEmail = regexEmail.test(newValue.email);
-      if (!checkEmail) {
-        // {
-        //   neworros.email = "";
-        // } else
-        neworros.email = "Nhập đúng định dạng email";
+        case "email":
+          {
+            let regexEmail =
+              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let checkEmail = regexEmail.test(newValue.email);
+            if (!checkEmail) {
+              // {
+              //   neworros.email = "";
+              // } else
+              neworros.email = "Nhập đúng định dạng email";
+            }
+          }
+          break;
       }
     }
     let valid = false;
@@ -86,7 +90,7 @@ export default class FormSinhVien extends Component {
                   value={this.state.values.maSV}
                   onChange={this.getValueInput}
                 />
-                <p>{maSV}</p>
+                <p className="text-danger">{maSV}</p>
               </div>
               <div className="col-6">
                 <label htmlFor="">Họ Và Tên</label>
@@ -98,7 +102,7 @@ export default class FormSinhVien extends Component {
                   data-type="letter"
                   onChange={this.getValueInput}
                 />
-                <p>{hoTen}</p>
+                <p className="text-danger">{hoTen}</p>
               </div>
             </div>
             <div className="row mb-3">
@@ -112,18 +116,19 @@ export default class FormSinhVien extends Component {
                   onChange={this.getValueInput}
                   data-type="number"
                 />
-                <p>{soDT}</p>
+                <p className="text-danger">{soDT}</p>
               </div>
               <div className="col-6">
                 <label htmlFor="">EMail</label>
                 <input
+                  data-type="email"
                   className="form-control"
                   type="text"
                   id="email"
                   value={this.state.values.email}
                   onChange={this.getValueInput}
                 />
-                <p>{email}</p>
+                <p className="text-danger">{email}</p>
               </div>
             </div>
           </div>
@@ -150,3 +155,15 @@ export default class FormSinhVien extends Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    themSinhVien: (sinhVien) => {
+      const action = {
+        type: "THEM_SINH_VIEN",
+        sinhVien,
+      };
+      dispatch(action);
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(FormSinhVien);
