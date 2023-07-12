@@ -11,11 +11,7 @@ export const sinhVienReduce = (state = stateDefoult, action) => {
         return { ...state, mangSinhVien: [...newArrSinhVien] };
       }
       break;
-    default:
-      {
-        return { ...state };
-      }
-      break;
+
     case "XOA_SINH_VIEN":
       {
         let newArrSinhVien = [...state.mangSinhVien];
@@ -29,17 +25,23 @@ export const sinhVienReduce = (state = stateDefoult, action) => {
         }
       }
       break;
-    // case "THONG_TIN_SINH_VIEN":
-    //   {
-    //     let newArrSinhVien = [...state.mangSinhVien];
-    //     // state.mangSinhVien = newArrSinhVien;
-    //     let index = newArrSinhVien.findIndex(
-    //       (thongTinSV) => thongTinSV.maSV === action.maSV
-    //     );
-    //     if (index !== -1) {
-    //       return { ...state, mangSinhVien: [...newArrSinhVien] };
-    //     }
-    //   }
-    //   break;
+    case "TT_SINH_VIEN":
+      {
+        let newArrSinhVien = [...state.mangSinhVien];
+        // state.mangSinhVien = newArrSinhVien;
+        // let index = newArrSinhVien.findIndex(
+        //   (thongTinSV) => thongTinSV.maSV === action.maSV
+        // );
+        // if (index !== -1) {
+        console.log(action);
+        // }
+        return { ...state, mangSinhVien: [...newArrSinhVien] };
+      }
+      break;
+    default:
+      {
+        return { ...state };
+      }
+      break;
   }
 };

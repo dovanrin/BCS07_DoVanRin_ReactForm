@@ -11,37 +11,37 @@ class XuLyForm extends Component {
   state = {
     arrThongTin: [],
   };
-  themSinhVien = (sinhVien) => {
-    let newThongTin = this.state.arrThongTin;
-    newThongTin.push(sinhVien);
-    this.setState({
-      arrThongTin: newThongTin,
-    });
-  };
-  xoaSinhVien = (maSV) => {
-    let index = this.state.arrThongTin.findIndex((item) => item.maSV == maSV);
-    if (index != -1) {
-      let newThongTin = [...this.state.arrThongTin];
-      newThongTin.splice(index, 1);
-      this.setState({
-        arrThongTin: newThongTin,
-      });
-    }
-  };
-  layThongTinInput = (maSV) => {
-    let sinhVien = this.props.mangSinhVien.find(
-      (item) => item.maSV == sinhVien.maSV
-    );
-    // if (sinhVien) {
-    //   this.setState({
-    //     ...this.state,
-    //     sinhVien: sinhVien,
-    //   });
-    this.ref.current.setState({
-      ...this.ref.current.state,
-      values: sinhVien,
-    });
-  };
+  // themSinhVien = (sinhVien) => {
+  //   let newThongTin = this.state.arrThongTin;
+  //   newThongTin.push(sinhVien);
+  //   this.setState({
+  //     arrThongTin: newThongTin,
+  //   });
+  // };
+  // xoaSinhVien = (maSV) => {
+  //   let index = this.state.arrThongTin.findIndex((item) => item.maSV == maSV);
+  //   if (index != -1) {
+  //     let newThongTin = [...this.state.arrThongTin];
+  //     newThongTin.splice(index, 1);
+  //     this.setState({
+  //       arrThongTin: newThongTin,
+  //     });
+  //   }
+  // };
+  // layThongTinInput = (maSV) => {
+  //   let sinhVien = this.props.mangSinhVien.find(
+  //     (item) => item.maSV == sinhVien.maSV
+  //   );
+  //   // if (sinhVien) {
+  //   //   this.setState({
+  //   //     ...this.state,
+  //   //     sinhVien: sinhVien,
+  //   //   });
+  //   this.ref.current.setState({
+  //     ...this.ref.current.state,
+  //     values: sinhVien,
+  //   });
+  // };
   capNhatThongTin = (sinhVien) => {
     let index = this.state.arrThongTin.findIndex(
       (item) => item.maSV == sinhVien.maSV
@@ -72,7 +72,7 @@ class XuLyForm extends Component {
           <button
             className="btn btn-warning"
             onClick={() => {
-              this.layThongTinSinhVien(sinhVien);
+              this.props.ThongTinSV(sinhVien);
             }}
           >
             Sữa
@@ -89,10 +89,10 @@ class XuLyForm extends Component {
             THÔNG TIN SINH VIÊN
           </h1>
           <FormSinhVien
-          // ref={this.ref}
-          // themSinhVien={this.themSinhVien}
-          // thongTinSinhVien={this.state.sinhVien}
-          // capNhatThongTin={this.capNhatThongTin}
+            // ref={this.ref}
+            themSinhVien={this.themSinhVien}
+            // ThongTinSV={this.ThongTinSV}
+            // capNhatThongTin={this.capNhatThongTin}
           />
           <div>
             <div>
@@ -137,10 +137,10 @@ const mapDispatchToProps = (dispatch) => {
 
       dispatch(action);
     },
-    capNhatThongTinSV: (maSV) => {
+    ThongTinSV: (sinhVien) => {
       const action = {
-        type: "CN_SINH_VIEN",
-        maSV,
+        type: "TT_SINH_VIEN",
+        sinhVien,
       };
 
       dispatch(action);

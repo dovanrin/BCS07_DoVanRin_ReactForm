@@ -71,7 +71,7 @@ class FormSinhVien extends Component {
     this.props.themSinhVien({ ...this.state.values });
   };
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     let { maSV, hoTen, soDT, email } = this.state.orros;
     return (
       <div>
@@ -87,7 +87,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="maSV"
-                  value={this.state.values.maSV}
+                  value={this.props.mangSinhVien.maSV}
                   onChange={this.getValueInput}
                 />
                 <p className="text-danger">{maSV}</p>
@@ -98,7 +98,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="hoTen"
-                  value={this.state.values.hoTen}
+                  value={this.props.mangSinhVien.hoTen} // value={this.state.values.hoTen}
                   data-type="letter"
                   onChange={this.getValueInput}
                 />
@@ -112,7 +112,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="soDT"
-                  value={this.state.values.soDT}
+                  value={this.props.mangSinhVien.soDT}
                   onChange={this.getValueInput}
                   data-type="number"
                 />
@@ -125,7 +125,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="email"
-                  value={this.state.values.email}
+                  value={this.props.mangSinhVien.email}
                   onChange={this.getValueInput}
                 />
                 <p className="text-danger">{email}</p>
@@ -166,4 +166,9 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(null, mapDispatchToProps)(FormSinhVien);
+const mapStateToProps = (state) => {
+  return {
+    mangSinhVien: state.sinhVienReduce.mangSinhVien,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(FormSinhVien);
