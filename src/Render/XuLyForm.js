@@ -42,16 +42,16 @@ class XuLyForm extends Component {
   //     values: sinhVien,
   //   });
   // };
-  capNhatThongTin = (sinhVien) => {
-    let index = this.state.arrThongTin.findIndex(
-      (item) => item.maSV == sinhVien.maSV
-    );
-    if (index !== -1) {
-      let arrnewThongTin = [...this.state.arrThongTin];
-      arrnewThongTin[index] = sinhVien;
-      this.setState({ arrThongTin: arrnewThongTin });
-    }
-  };
+  // capNhatThongTin = (sinhVien) => {
+  //   let index = this.state.arrThongTin.findIndex(
+  //     (item) => item.maSV == sinhVien.maSV
+  //   );
+  //   if (index !== -1) {
+  //     let arrnewThongTin = [...this.state.arrThongTin];
+  //     arrnewThongTin[index] = sinhVien;
+  //     this.setState({ arrThongTin: arrnewThongTin });
+  //   }
+  // };
   renderThongTin = () => {
     const { mangSinhVien } = this.props;
     return mangSinhVien.map((sinhVien, index) => {
@@ -91,13 +91,22 @@ class XuLyForm extends Component {
           <FormSinhVien
             // ref={this.ref}
             themSinhVien={this.themSinhVien}
-            // ThongTinSV={this.ThongTinSV}
+            ThongTinSV={this.ThongTinSV}
             // capNhatThongTin={this.capNhatThongTin}
           />
           <div>
             <div>
               <label>Tìm Kiếm: </label>
-              <input className="inputSearch m-3" type="search" />
+              <input className="inputSearch m-3" type="search" id="seach" />
+              <button
+                type="search"
+                className="w-10 h-25"
+                onClick={() => {
+                  // this.props.dispatch();
+                }}
+              >
+                Search
+              </button>
             </div>
             <table className="table mt-2" cellPadding={20}>
               <thead className="bg-secondary text-white">
@@ -107,16 +116,7 @@ class XuLyForm extends Component {
                 <th>EMail</th>
                 <th>Hành Động</th>
               </thead>
-              <tbody>
-                {this.renderThongTin()}
-                {/* {this.state.arrThongTin.map(
-                  ({ maSV, hoTen, soDT, email }, index) => {
-                    return (
-                      
-                    );
-                  }
-                )} */}
-              </tbody>
+              <tbody>{this.renderThongTin()}</tbody>
             </table>
           </div>
         </div>
@@ -143,6 +143,13 @@ const mapDispatchToProps = (dispatch) => {
         sinhVien,
       };
 
+      dispatch(action);
+    },
+    SearchThongTin: (sinhVien) => {
+      const action = {
+        type: "SEARCH",
+        sinhVien,
+      };
       dispatch(action);
     },
   };

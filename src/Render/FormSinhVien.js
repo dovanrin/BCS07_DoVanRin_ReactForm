@@ -69,9 +69,24 @@ class FormSinhVien extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.themSinhVien({ ...this.state.values });
+    this.state.values = "";
   };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.sinhVienEdit !== prevProps.sinhVienEdit) {
+      this.setState({
+        ...this.state,
+        values: {
+          maSV: this.props.sinhVienEdit.maSV,
+          hoTen: this.props.sinhVienEdit.hoTen,
+          soDT: this.props.sinhVienEdit.soDT,
+          email: this.props.sinhVienEdit.email,
+        },
+      });
+    }
+  }
+
   render() {
-    // console.log(this.state);
     let { maSV, hoTen, soDT, email } = this.state.orros;
     return (
       <div>
@@ -87,7 +102,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="maSV"
-                  value={this.props.mangSinhVien.maSV}
+                  value={this.state.values?.maSV}
                   onChange={this.getValueInput}
                 />
                 <p className="text-danger">{maSV}</p>
@@ -98,7 +113,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="hoTen"
-                  value={this.props.mangSinhVien.hoTen} // value={this.state.values.hoTen}
+                  value={this.state.values?.hoTen} // value={this.state.values.hoTen}
                   data-type="letter"
                   onChange={this.getValueInput}
                 />
@@ -112,7 +127,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="soDT"
-                  value={this.props.mangSinhVien.soDT}
+                  value={this.state.values?.soDT}
                   onChange={this.getValueInput}
                   data-type="number"
                 />
@@ -125,7 +140,7 @@ class FormSinhVien extends Component {
                   className="form-control"
                   type="text"
                   id="email"
-                  value={this.props.mangSinhVien.email}
+                  value={this.state.values?.email}
                   onChange={this.getValueInput}
                 />
                 <p className="text-danger">{email}</p>
@@ -144,7 +159,7 @@ class FormSinhVien extends Component {
               className="btn btn-success"
               type="button"
               onClick={() => {
-                this.props.capNhatThongTin({ ...this.state.values });
+                // this.props.capNhatThongTin({ ...this.state.values });
               }}
             >
               Cập Nhập
@@ -166,9 +181,11 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
+
 const mapStateToProps = (state) => {
   return {
     mangSinhVien: state.sinhVienReduce.mangSinhVien,
+    sinhVienEdit: state.sinhVienReduce.sinhVienEdit,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(FormSinhVien);
