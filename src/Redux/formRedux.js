@@ -1,5 +1,7 @@
 const stateDefoult = {
   mangSinhVien: [],
+  oldMangSinhVien: [],
+
   sinhVienEdit: {},
 };
 
@@ -8,7 +10,11 @@ export const sinhVienReduce = (state = stateDefoult, action) => {
     case "THEM_SINH_VIEN": {
       let newArrSinhVien = [...state.mangSinhVien, action.sinhVien];
       // state.mangSinhVien = newArrSinhVien;
-      return { ...state, mangSinhVien: [...newArrSinhVien] };
+      return {
+        ...state,
+        mangSinhVien: [...newArrSinhVien],
+        oldMangSinhVien: [...newArrSinhVien],
+      };
     }
 
     case "XOA_SINH_VIEN":
@@ -35,26 +41,36 @@ export const sinhVienReduce = (state = stateDefoult, action) => {
       return { ...state, sinhVienEdit: { ...action.sinhVien } };
     }
     case "CAP_NHAT_SV": {
-      state.sinhVienEdit = { ...state.sinhVienEdit, sinhVien: action.sinhVien };
       let newArrSinhVien = [...state.mangSinhVien];
       let index = newArrSinhVien.findIndex(
-        (thongTinSV) => thongTinSV.maSV === state.sinhVienEdit.maSV
+        (thongTinSV) => thongTinSV.maSV === action.sinhVien.maSV
       );
       if (index !== -1) {
-        newArrSinhVien[index] = state.sinhVienEdit;
+        newArrSinhVien[index] = action.sinhVien;
       }
-      return { ...state, mangSinhVien: [...newArrSinhVien] };
+      return {
+        ...state,
+        mangSinhVien: [...newArrSinhVien],
+        sinhVienEdit: { ...action.sinhVien },
+      };
       // state.mangSinhVien = newArrSinhVien;
     }
     case "SEARCH":
       {
         let newArrSinhVien = [...state.mangSinhVien];
         // state.mangSinhVien = newArrSinhVien;
-        newArrSinhVien = newArrSinhVien.filter(
-          (thongTinSV) => thongTinSV.hoTen === action.hoTen
-        );
+        if (action.sinhVien) {
+          console.log("arr", newArrSinhVien);
+          newArrSinhVien = newArrSinhVien.filter((thongTinSV) => {
+            console.log(thongTinSV.hoTen);
+            console.log(action.sinhVien);
 
-        return { ...state, mangSinhVien: [...newArrSinhVien] };
+            return thongTinSV.hoTen.includes(action.sinhVien);
+          });
+          return { ...state, mangSinhVien: [...newArrSinhVien] };
+        }
+
+        return { ...state, mangSinhVien: [...state.oldMangSinhVien] };
       }
       break;
     default:

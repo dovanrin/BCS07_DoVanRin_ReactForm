@@ -15,14 +15,17 @@ class XuLyForm extends Component {
       searchTerm: "",
     },
   };
-  // searchStudentHandler = (event) => {
-  //   setUsers((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       searchTerm: event.target.value,
-  //     };
-  //   });
-  // };
+  onChangeSearch = (event) => {
+    this.setState({ searchTerm: event.target.value });
+    // this.props.SearchThongTin(this.state.searchTerm);
+    // this.props.mangSinhVien.filter((sinhvien)=>sinhvien.hoTen === event.target.value);
+    // console.log(event.target.value);
+    console.log(this.state.searchTerm);
+  };
+  searchStudentHandler = () => {
+    this.props.SearchThongTin(this.state.searchTerm);
+    console.log(this.state.searchTerm);
+  };
   // themSinhVien = (sinhVien) => {
   //   let newThongTin = this.state.arrThongTin;
   //   newThongTin.push(sinhVien);
@@ -109,13 +112,20 @@ class XuLyForm extends Component {
           <div>
             <div>
               <label>Tìm Kiếm: </label>
-              <input className="inputSearch m-3" type="search" id="seach" />
+              <input
+                className="inputSearch m-3"
+                type="search"
+                id="seach"
+                value={this.state.searchTerm}
+                onChange={this.onChangeSearch}
+              />
               <button
                 type="search"
                 className="w-10 h-25"
-                onClick={() => {
+                onClick={
+                  this.searchStudentHandler
                   // this.props.dispatch();
-                }}
+                }
               >
                 Search
               </button>
@@ -158,6 +168,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action);
     },
     SearchThongTin: (sinhVien) => {
+      console.log("redux", sinhVien);
       const action = {
         type: "SEARCH",
         sinhVien,
