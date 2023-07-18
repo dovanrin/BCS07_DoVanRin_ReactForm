@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import FormSinhVien from "./FormSinhVien";
 import { createRef } from "react";
 import { connect } from "react-redux";
@@ -10,7 +10,19 @@ class XuLyForm extends Component {
   }
   state = {
     arrThongTin: [],
+    useState: {
+      filteredStudents: [],
+      searchTerm: "",
+    },
   };
+  // searchStudentHandler = (event) => {
+  //   setUsers((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       searchTerm: event.target.value,
+  //     };
+  //   });
+  // };
   // themSinhVien = (sinhVien) => {
   //   let newThongTin = this.state.arrThongTin;
   //   newThongTin.push(sinhVien);

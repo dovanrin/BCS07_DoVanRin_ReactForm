@@ -34,6 +34,18 @@ export const sinhVienReduce = (state = stateDefoult, action) => {
       console.log(action.sinhVien);
       return { ...state, sinhVienEdit: { ...action.sinhVien } };
     }
+    case "CAP_NHAT_SV": {
+      state.sinhVienEdit = { ...state.sinhVienEdit, sinhVien: action.sinhVien };
+      let newArrSinhVien = [...state.mangSinhVien];
+      let index = newArrSinhVien.findIndex(
+        (thongTinSV) => thongTinSV.maSV === state.sinhVienEdit.maSV
+      );
+      if (index !== -1) {
+        newArrSinhVien[index] = state.sinhVienEdit;
+      }
+      return { ...state, mangSinhVien: [...newArrSinhVien] };
+      // state.mangSinhVien = newArrSinhVien;
+    }
     case "SEARCH":
       {
         let newArrSinhVien = [...state.mangSinhVien];

@@ -69,7 +69,7 @@ class FormSinhVien extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.themSinhVien({ ...this.state.values });
-    this.state.values = "";
+    // this.state.values = "";
   };
 
   componentDidUpdate(prevProps) {
@@ -159,7 +159,7 @@ class FormSinhVien extends Component {
               className="btn btn-success"
               type="button"
               onClick={() => {
-                // this.props.capNhatThongTin({ ...this.state.values });
+                this.props.capNhatSinhVien({ ...this.state.values });
               }}
             >
               Cập Nhập
@@ -175,6 +175,13 @@ const mapDispatchToProps = (dispatch) => {
     themSinhVien: (sinhVien) => {
       const action = {
         type: "THEM_SINH_VIEN",
+        sinhVien,
+      };
+      dispatch(action);
+    },
+    capNhatSinhVien: (sinhVien) => {
+      const action = {
+        type: "CAP_NHAT_SV",
         sinhVien,
       };
       dispatch(action);
